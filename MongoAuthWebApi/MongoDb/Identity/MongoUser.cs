@@ -1,4 +1,5 @@
 ﻿using AspNetCore.Identity.MongoDbCore.Models;
+using MongoDB.Bson.Serialization.Attributes;
 using MongoDbGenericRepository.Attributes;
 
 namespace MongoAuthWebApi.MongoDb.Identity;
@@ -12,7 +13,33 @@ public class MongoUser : MongoIdentityUser<Guid>
 
     public string LastName { get; set; } = string.Empty;
 
+    [BsonIgnore]
+    public bool IsLockedOut
+    {
+        get
+        {
+            if (LockoutEnd.HasValue)
+            {
+                return LockoutEnd.Value.UtcDateTime > DateTime.UtcNow;
+            }
+
+            return false;
+        }
+
+        set
+        {
+            if (LockoutEnd.HasValue && LockoutEnd.Value.UtcDateTime > DateTime.UtcNow)
+            {
+                LockoutEnd = DateTime.UtcNow;
+            }
+
+            AccessFailedCount = 0;
+        }
+    }
+
     public DateTime DateCreated { get; set; }
 
     public DateTime LastModifiedDate { get; set; }
+
+    public DateTime LastActivity { get; set; }
 }

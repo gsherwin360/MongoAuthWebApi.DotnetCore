@@ -31,10 +31,18 @@ public class MongoAuthenticationService : IJwtAuthenticationService
             return Result<AuthenticationResult>.Failure("The email and password doesn't match.");
         }
 
+        if (user.IsLockedOut)
+        {
+            return Result<AuthenticationResult>.Failure("The user account is temporarily locked for 5 minutes due to multiple failed login attempts. Please try again later.");
+        }
+
         var isValidPassword = await _userManager.CheckPasswordAsync(user, password);
 
         if (isValidPassword)
         {
+            user.LastActivity = DateTime.UtcNow;
+            await _userManager.ResetAccessFailedCountAsync(user);
+
             var issuer = _jwtConfigOptions.Value.ValidIssuer;
             var audience = _jwtConfigOptions.Value.ValidAudience;
             var key = Encoding.ASCII.GetBytes(_jwtConfigOptions.Value.SecretKey);
@@ -60,6 +68,7 @@ public class MongoAuthenticationService : IJwtAuthenticationService
             return Result<AuthenticationResult>.Success(new AuthenticationResult(stringToken, user));
         }
 
+        await this._userManager.AccessFailedAsync(user);
         return Result<AuthenticationResult>.Failure("The email and password doesn't match.");
     }
 }

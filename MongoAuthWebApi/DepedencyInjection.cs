@@ -38,6 +38,9 @@ public static class DepedencyInjection
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequireLowercase = false;
                 options.User.RequireUniqueEmail = true;
+                // Lockout
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
             }
         };
 

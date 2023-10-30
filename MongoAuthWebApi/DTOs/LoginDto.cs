@@ -13,6 +13,8 @@ public class LoginDTO
 
     public string Surname { get; set; } = string.Empty;
 
+    public DateTime LastActivity { get; set; }
+
     public LoginDTO(AuthenticationResult result)
     {
         if (result.User is not MongoUser user)
@@ -24,6 +26,7 @@ public class LoginDTO
         this.FirstName = user.FirstName;
         this.Surname = user.LastName;
         this.Email = user.Email;
+        this.LastActivity = user.LastActivity;
     }
 
     public LoginDTO()
