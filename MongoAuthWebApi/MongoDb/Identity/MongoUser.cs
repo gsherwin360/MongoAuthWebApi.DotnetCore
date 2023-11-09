@@ -37,9 +37,7 @@ public class MongoUser : MongoIdentityUser<Guid>
         }
     }
 
-    public DateTime DateCreated { get; set; }
+    public DateTime ModifiedOn { get; set; }
 
-    public DateTime LastModifiedDate { get; set; }
-
-    public DateTime LastActivity { get; set; }
+    public DateTime LastActivityOn { get; set; }
 }

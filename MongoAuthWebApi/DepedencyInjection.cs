@@ -9,6 +9,8 @@ using MongoDB.Bson.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -80,6 +82,25 @@ public static class DepedencyInjection
                     ClockSkew = TimeSpan.FromSeconds(5)
                 };
             });
+
+        return services;
+    }
+
+    public static IServiceCollection AddApiSwaggerServices(this IServiceCollection services)
+    {
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen(options =>
+        {
+            options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+            {
+                Description = "Standard Authorization header using the Bearer scheme. Example: 'bearer {token}'",
+                In = ParameterLocation.Header,
+                Name = "Authorization",
+                Type = SecuritySchemeType.ApiKey
+            });
+
+            options.OperationFilter<SecurityRequirementsOperationFilter>();
+        });
 
         return services;
     }

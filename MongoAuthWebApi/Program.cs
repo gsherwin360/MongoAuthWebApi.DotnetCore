@@ -10,8 +10,9 @@ builder.Services.AddScoped<IJwtAuthenticationService, MongoAuthenticationService
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly));
 
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddAuthorization();
+
+builder.Services.AddApiSwaggerServices();
 
 var app = builder.Build();
 

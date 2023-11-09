@@ -28,7 +28,7 @@ public class MongoAuthenticationService : IJwtAuthenticationService
 
         if (user is null)
         {
-            return Result<AuthenticationResult>.Failure("The email and password doesn't match.");
+            return Result<AuthenticationResult>.Failure("The email or password is incorrect.");
         }
 
         if (user.IsLockedOut)
@@ -40,7 +40,7 @@ public class MongoAuthenticationService : IJwtAuthenticationService
 
         if (isValidPassword)
         {
-            user.LastActivity = DateTime.UtcNow;
+            user.LastActivityOn = DateTime.UtcNow;
             await _userManager.ResetAccessFailedCountAsync(user);
 
             var issuer = _jwtConfigOptions.Value.ValidIssuer;
@@ -69,6 +69,6 @@ public class MongoAuthenticationService : IJwtAuthenticationService
         }
 
         await this._userManager.AccessFailedAsync(user);
-        return Result<AuthenticationResult>.Failure("The email and password doesn't match.");
+        return Result<AuthenticationResult>.Failure("The email or password is incorrect.");
     }
 }
