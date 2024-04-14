@@ -28,12 +28,12 @@ public class MongoAuthenticationService : IJwtAuthenticationService
 
         if (user is null)
         {
-            return Result<AuthenticationResult>.Failure("The email or password is incorrect.");
+            return Result<AuthenticationResult>.Failure(AuthenticationError.InvalidCredentials);
         }
 
         if (user.IsLockedOut)
         {
-            return Result<AuthenticationResult>.Failure("The user account is temporarily locked for 5 minutes due to multiple failed login attempts. Please try again later.");
+            return Result<AuthenticationResult>.Failure(AuthenticationError.UserLockedOut);
         }
 
         var isValidPassword = await _userManager.CheckPasswordAsync(user, password);
@@ -69,6 +69,6 @@ public class MongoAuthenticationService : IJwtAuthenticationService
         }
 
         await this._userManager.AccessFailedAsync(user);
-        return Result<AuthenticationResult>.Failure("The email or password is incorrect.");
+        return Result<AuthenticationResult>.Failure(AuthenticationError.InvalidCredentials);
     }
 }

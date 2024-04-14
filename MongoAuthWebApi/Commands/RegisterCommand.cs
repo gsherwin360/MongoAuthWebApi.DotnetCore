@@ -20,7 +20,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Result<Gu
     {
         if (IsUserExists(request.Email))
         {
-            return Result<Guid>.Failure("User is already exist.");
+            return Result<Guid>.Failure(new Error("UserAlreadyExist", "User is already exist."));
         }
 
         var user = CreateUser(request);
@@ -32,7 +32,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Result<Gu
             return Result<Guid>.Success(user.Id);
         }
 
-        return Result<Guid>.Failure(resultCreate.Errors.First().Description);
+        return Result<Guid>.Failure(new Error(resultCreate.Errors.First().Code, resultCreate.Errors.First().Description));
     }
 
     private bool IsUserExists(string email)
