@@ -30,3 +30,23 @@ To run the API locally, follow these steps:
 2. Open the project in your preferred development environment.
 3. Build and run the project.
 4. Access the API documentation via [Swagger](http://localhost:5281/swagger/index.html) in your web browser while the API and MongoDB Containers are running.
+
+## Screenshots
+
+### API:
+- Overview: ![API Overview](https://github.com/gsherwin360/MongoAuthWebApi.DotnetCore/assets/17651320/083d982c-d3b9-4575-8eab-8bc7caae38ac)
+- JWT Authentication: ![JWT Authentication](https://github.com/gsherwin360/MongoAuthWebApi.DotnetCore/assets/17651320/651e075e-6438-4f38-aec5-6650db598966)
+- User Lockout Functionality: ![User Lockout](![image](https://github.com/gsherwin360/MongoAuthWebApi.DotnetCore/assets/17651320/cde7df59-42a2-4195-95c9-0edbd7688def)
+- Fetch User List (Authenticated Request): ![image](https://github.com/gsherwin360/MongoAuthWebApi.DotnetCore/assets/17651320/9191ae13-3bdd-43bd-9b6c-a751d678f686)
+  
+---
+### Mongo Express:
+- Overview: ![Mongo Express Overview](https://github.com/gsherwin360/MongoAuthWebApi.DotnetCore/assets/17651320/21e9d375-797a-47a0-bce8-898c6aeae73a)
+
+---
+### Docker:
+- Overview: ![Docker Overview](https://github.com/gsherwin360/MongoAuthWebApi.DotnetCore/assets/17651320/3400d7bb-2502-4d94-8a46-f54dfbc3517e)
+
+
+
+
